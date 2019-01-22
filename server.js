@@ -18,7 +18,7 @@ const init = async () => {
   
   //after you create table, if you would like to change table, you need to add {force: true}
   //await db.sync({force: true}). otherwise, table scheme will not be updated.
-  //{force: true} will drop table and recreate which you dont wanna do it all the time.
+  //{force: true} will drop table (means delete everything!) and recreate which you dont wanna do it all the time.
   await db.sync()
   
   server.listen(PORT, () => {

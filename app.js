@@ -22,14 +22,13 @@ app.get('/', (req, res, next) => {
   } catch(error) {
     next(error)
   }
-  
 })
 
 const wikiRouter = require("./routes/wiki")
 const userRouter = require("./routes/user")
 
 app.use('/wiki', wikiRouter);
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 
 
 module.exports = app;

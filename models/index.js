@@ -54,7 +54,7 @@ const User = db.define('user', {
 })
 
 Page.belongsTo(User, {as: 'author'});
-
+User.hasMany(Page, {foreignKey: 'authorId'})
 // db.authenticate().
 // then(() => {
 //   console.log('connected to the database');

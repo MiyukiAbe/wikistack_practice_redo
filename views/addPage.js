@@ -7,9 +7,9 @@ module.exports = () => layout(html`
   <form method="POST" action="/wiki/">
     
     <div class="form-group">
-      <label for="authorName" class="col-sm-2 control-label">Author Name</label>
+      <label for="name" class="col-sm-2 control-label">Author Name</label>
       <div class="col-sm-10">
-        <input id='authorName' name ='authorName' type = 'text'>
+        <input id='name' name ='name' type = 'text'>
       </div> 
     </div>
     
