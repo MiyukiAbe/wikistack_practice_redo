@@ -9,18 +9,28 @@ const router = express.Router();
 //solution video is below
 const { addPage, editPage, main, userList, userPages, wikiPage } = require('../views')
 
+const {Page, User} = require('../models')
+ 
 //localhost:3000/wiki/
-router.get('/', (req, res, next) =>{
+router.get('/', async (req, res, next) =>{
   try {
-    res.send('go to GET /wiki/')
+    const pages = await Page.findAll();
+    res.send(main(pages))
   } catch (error){
     next(error)
   }
 })
 
-router.post('/', (req, res, next) =>{
+router.post('/', async (req, res, next) =>{
+  const page = new Page(req.body);
+  //capturing Page content
+  // const page = new Page ({
+  //   title: req.body.title,
+  //   content: req.body.content
+  // })
   try {
-    res.send('go to POST /wiki/')
+      await page.save();
+      res.redirect(`/wiki/${page.slug}`)
   } catch (error){
     next(error)
   }
@@ -34,5 +44,16 @@ router.get('/add', (req, res, next) =>{
     next(error)
   }
 })
+
+router.get('/:slug', async (req,res,next)=>{
+  try {
+    const page = await Page.findOne({
+      where: {
+        slug: req.params.slug
+      }
+    });
+    res.send(wikiPage(page))
+  } catch (error){ next(error)}
+  });
 
 module.exports = router;

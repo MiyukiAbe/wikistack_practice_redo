@@ -10,6 +10,9 @@ const db = new Sequelize(`postgres://localhost:5432/wikistack_practice`, {
 //   logging: false
 // });
 
+function generateSlug (title) {
+  return title.replace(/\s+/g, '_').replace(/\W/g, '');
+}
 
 const Page = db.define('page', {
   title: {
@@ -27,7 +30,13 @@ const Page = db.define('page', {
   status: {
     type: Sequelize.ENUM('open', 'closed')
   },
-  
+})
+
+//not sure which 'page' this is talking about... wiki page's page?
+Page.beforeValidate((page)=>{
+  if (!page.slug) {
+    page.slug = generateSlug(page.title)
+  }
 })
 
 const User = db.define('user', {
@@ -44,6 +53,7 @@ const User = db.define('user', {
   }
 })
 
+Page.belongsTo(User, {as: 'author'});
 
 // db.authenticate().
 // then(() => {
